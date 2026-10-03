@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>உட்பிரிவு பட்டா மாறுதல் அறிக்கை - Quick Entry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --text-black: #000000;
+    --text-red: #d32f2f;
+    --border-color: #000000;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans Tamil', Arial, sans-serif;
+    background: #e2e8f0;
+    margin: 0;
+    padding: 8px;
+    font-size: 12px;
+    color: #111;
+  }
+  .no-print {
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 1400px;
+    margin: 0 auto 16px auto;
+  }
+  .wizard-header {
+    background: #f8fafc;
+    border: 1.5px solid #0284c7;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  label {
+    font-weight: 600;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 3px;
+    color: #334155;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #94a3b8;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #ffffff;
+    font-family: inherit;
+  }
+  button {
+    cursor: pointer;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .btn-green { background: #16a34a; color: #fff; }
+  .btn-red { background: #dc2626; color: #fff; }
+  .btn-blue { background: #2563eb; color: #fff; }
+  .btn-clear-all {
+    background: #b91c1c;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  .btn-download-all {
+    background: #1e3a8a;
+    color: #fff;
+    font-size: 13.5px;
+    padding: 11px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    width: 100%;
+  }
+  .btn-download-curr {
+    background: #0f172a;
+    color: #fff;
+    font-size: 12px;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0 10px 0;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 8px;
+    overflow-x: auto;
+  }
+  .nav-tab-btn {
+    background: #e2e8f0;
+    color: #1e293b;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 11.5px;
+    font-weight: bold;
+    border: none;
+    white-space: nowrap;
+  }
+  .nav-tab-btn.active {
+    background: #1e3a8a;
+    color: #ffffff;
+  }
+  .survey-card {
+    background: #ffffff;
+    border: 1.5px solid #94a3b8;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+  .subdiv-item-box {
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .subdiv-number-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 11.5px;
+    font-weight: bold;
+    margin-right: 6px;
+  }
+  .sheet-container {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin: 0 auto 20px auto;
+    overflow-x: auto;
+    width: 1120px !important;
+    min-width: 1120px !important;
+  }
+  .sheet-header-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+  }
+  .sheet-header-table td { padding: 3px; border: none; }
+  .statement-table {
+    width: 100%;
+    border-collapse: collapse !important;
+    border: 1.5px solid #000000 !important;
+    font-size: 10px;
+    color: #000000;
+    table-layout: fixed;
+    background: #ffffff;
+  }
+  .statement-table th, .statement-table td {
+    border: 1px solid #000000 !important;
+    padding: 4px 2px;
+    text-align: center;
+    vertical-align: middle;
+    height: 28px;
+    line-height: 1.25;
+  }
+  .statement-table th { background: #ffffff; font-weight: bold; }
+  .text-left { text-align: left !important; padding-left: 5px !important; }
+  .cell-nowrap { white-space: nowrap !important; font-size: 9.5px; }
+  .rotate-up {
+    height: 140px;
+    padding: 0 !important;
+    vertical-align: bottom !important;
+  }
+  .rotate-up > div {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: normal;
+    text-align: left;
+    margin: 0 auto;
+    padding: 4px 1px;
+    font-size: 9px;
+    line-height: 1.2;
+    font-weight: bold;
+    height: 135px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .col-new-subdiv { color: #d32f2f !important; font-weight: 600; }
+  .row-sub-total { font-weight: bold; color: #000000 !important; background: #ffffff; }
+  .portrait-container {
+    width: 794px !important;
+    min-width: 794px !important;
+    padding: 15mm 15mm;
+    margin: 0 auto 20px auto;
+    background: #ffffff;
+    border: 1.5px solid #000000;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #000000;
+  }
+  .officer-center-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .doc-title-top {
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+    text-decoration: underline;
+  }
+  .doc-table {
+    width: 100%;
+    border-collapse: collapse !important;
+    border: 1.5px solid #000000 !important;
+    margin: 10px 0;
+    font-size: 11px;
+    table-layout: fixed;
+  }
+  .doc-table th, .doc-table td {
+    border: 1px solid #000000 !important;
+    padding: 5px 4px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .doc-table th { background: #f8fafc; font-weight: bold; }
+  .empty-row td { height: 26px !important; }
+  #sheetContainerPortrait2 .doc-table tbody td { color: #d32f2f !important; font-weight: 600; }
+  #sheetContainerPortrait2 .doc-table tbody tr.row-sub-total-black td {
+    color: #000000 !important;
+    font-weight: bold !important;
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <div class="wizard-header">
+    <div style="font-size: 13.5px; font-weight: bold; color: #0369a1; margin-bottom: 8px;">
+      ⚡ நேரடி விவர உள்ளீட்டு முறை (Subdivision Statement & Reports)
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <button type="button" onclick="addNewSurveyCard()" class="btn-green" style="padding: 9px 16px; font-size: 13px;">
+        ➕ புதிய புல எண் சேர் (Add Survey)
+      </button>
+      <button type="button" onclick="executeClearAll()" class="btn-clear-all" style="padding: 9px 14px;">
+        🗑️ புதிய மனு (Clear All)
+      </button>
+      <span style="font-size: 11.5px; color: #475569;">
+        தட்டச்சு செய்யும் போது விசைப்பலகை மறையாது; தட்டச்சு செய்து முடித்தவுடன் அறிக்கைகள் உடனுக்குடன் மாறும்.
+      </span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div><label>மாவட்டம்</label><input type="text" id="district" value="தஞ்சாவூர்" placeholder="மாவட்டம்" oninput="updateLiveView();"></div>
+    <div><label>வட்டம்</label><input type="text" id="taluk" value="திருவோணம்" placeholder="வட்டம்" oninput="updateLiveView();"></div>
+    <div><label>கிராம எண்</label><input type="text" id="villageNo" value="092" placeholder="கிராம எண்" oninput="updateLiveView();"></div>
+    <div><label>கிராமம்</label><input type="text" id="villageName" value="நெய்வேலி வடபாதி" placeholder="கிராமம்" oninput="updateLiveView();"></div>
+    <div style="grid-column: span 2;"><label>மனுதாரர் பெயர்</label><input type="text" id="applicantNameInput" placeholder="மனுதாரர் பெயர்" oninput="updateLiveView();"></div>
+    <div><label>ப.மா 8 எண்</label><input type="text" id="pamaNo" value="2026/01/08" oninput="updateLiveView();"></div>
+    <div><label>மனு நாள்</label><input type="text" id="manuDate" value="11/09/2026" oninput="updateLiveView();"></div>
+    <div><label>படிவம் 1 காலிகள்</label><input type="number" id="p1BlankRows" value="6" min="0" max="30" oninput="updateLiveView();"></div>
+    <div><label>படிவம் 2 காலிகள்</label><input type="number" id="p2BlankRows" value="8" min="0" max="30" oninput="updateLiveView();"></div>
+    <div><label>ஸ்டேட்மென்ட் காலிகள்</label><input type="number" id="blankRowsCount" value="6" min="0" max="30" oninput="updateLiveView();"></div>
+  </div>
+
+  <hr style="border:0; border-top:1px solid #cbd5e1; margin:10px 0;">
+
+  <!-- புல எண் வாரியான அட்டைகள் -->
+  <div id="surveysContainer"></div>
+
+  <div class="nav-tabs">
+    <button type="button" class="nav-tab-btn active" onclick="switchReportTab('landscape')">1. ஸ்டேட்மென்ட் (Landscape)</button>
+    <button type="button" class="nav-tab-btn" onclick="switchReportTab('portrait1')">2. படிவம் 1: முன் அறிக்கை</button>
+    <button type="button" class="nav-tab-btn" onclick="switchReportTab('portrait2')">3. படிவம் 2: பின் பரிந்துரை</button>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+    <button type="button" class="btn-download-all" onclick="saveAsPDFDirect('all')">⚡ 3 பக்கங்களும் ஒரே கோப்பாக PDF சேமி (All-in-One)</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+      <span id="overallAreaBadge" style="font-weight:bold; padding:4px 8px; border-radius:4px; background:#f1f5f9;"></span>
+      <button type="button" class="btn-download-curr" id="dynamicDownloadBtn" onclick="saveAsPDFDirect(currentReportTab)">📥 தற்போதைய படிவத்தை PDF-ஆக சேமி</button>
+    </div>
+  </div>
+</div>
+
+<!-- 1. LANDSCAPE STATEMENT SHEET -->
+<div style="overflow-x:auto;">
+  <div class="sheet-container" id="sheetContainerLandscape">
+    <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <span style="font-weight:bold; font-size:12px;">1. லேண்ட்ஸ்கேப் ஸ்டேட்மென்ட் தாள்</span>
+      <button class="btn-download-curr" onclick="saveAsPDFDirect('landscape')">📥 PDF-ஆக சேமி (A4 Landscape)</button>
+    </div>
+
+    <table class="sheet-header-table">
+      <tr>
+        <td style="width:35%;">மாவட்டம் : <span id="lblDistrict"></span></td>
+        <td style="width:40%; text-align:center;">கிராமம் எண் & பெயர் : <span id="lblVillage"></span></td>
+        <td style="width:25%; text-align:right;">புல எண் : <span id="lblSurveyNoSummary"></span></td>
+      </tr>
+      <tr>
+        <td>வட்டம் : <span id="lblTaluk"></span></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <table class="statement-table" id="statementTable">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width:5.8%;" class="rotate-up">
+            <div>தற்போதுள்ள ஸ்தலத்தின் புலஎண் அல்லது உட்பிரிவு</div>
+          </th>
+          <th colspan="3" style="font-size:10px; height:24px;">அதின் வகுப்பு சர்வே விஸ்த்தீரணம் தீர்வை</th>
+          <th rowspan="2" style="width:16%;">இப்பொழுதுள்ள ரிஜிஸ்தரான கையகத்துக்காரர் பெயர்</th>
+          <th colspan="5" style="font-size:10px;">இப்போது உத்தேசித்திற்கும் சப்டிவிஷன்களின் விவரம்</th>
+          <th rowspan="2" style="width:18%;">ரிஜிஸ்தர் செய்ய உத்தேசித்திற்கும் கையகத்துக்காரர்களுடைய பெயர்களும்</th>
+          <th colspan="4" style="font-size:9.5px;">கள நிலவரம் & ஆய்வு</th>
+          <th rowspan="2" style="width:7%;" class="rotate-up">
+            <div>ஒன்றுசேர்க்கக்கூடிய சப்டிவிஷன்களையும் அவைகளை ஒன்று சேர்ப்பதற்கு பட்டாதாரார்க்கு ஆட்சேபனை உண்டா என்பதை குறிக்கவும்</div>
+          </th>
+        </tr>
+        <tr>
+          <th style="width:3.8%;" class="rotate-up"><div>புஞ்சை,நஞ்சை புறம்போக்கு</div></th>
+          <th style="width:5.5%;" class="rotate-up"><div>புல எண் விஸ்தீரணம்</div></th>
+          <th style="width:4.2%;" class="rotate-up"><div>தீர்வை</div></th>
+          <th style="width:3.8%;" class="rotate-up"><div>புஞ்சை,நஞ்சை புறம்போக்கு</div></th>
+          <th style="width:5.5%;" class="rotate-up"><div>சப்டிவிஷன் பட்டா</div></th>
+          <th style="width:5.5%;" class="rotate-up"><div>ஏரியா ஸ்கொயர் விஸ்தீரணம்</div></th>
+          <th style="width:5.5%;" class="rotate-up"><div>(3)வது ஸ்தலத்தை அனுசரித்து சரிக்கட்டின் விஸ்த்தீரணம்</div></th>
+          <th style="width:4.2%;" class="rotate-up"><div>தீர்வை</div></th>
+          <th style="width:5%;" class="rotate-up"><div>கட்சிக்காரர்களின் கையெழுத்து</div></th>
+          <th style="width:7.2%;" class="rotate-up"><div>பூமியில் சரியான அத்து இருக்கிறதா சரியான இடத்தில் கல் நடப்பட்டு இருக்கிறதா</div></th>
+          <th style="width:6%;" class="rotate-up"><div>(12)வது காலத்தில் கட்சிக்காரர் கையெழுத்து செய்யாவிட்டால் காரணம்</div></th>
+          <th style="width:4.2%;" class="rotate-up"><div>சப்டிவிஷன் செய்ய காரணம்</div></th>
+        </tr>
+      </thead>
+      <tbody id="statementBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 2. படிவம் 1: முன் அறிக்கை -->
+<div style="overflow-x:auto;">
+  <div class="portrait-container" id="sheetContainerPortrait1" style="display:none;">
+    <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <span style="font-weight:bold; font-size:12px;">2. படிவம் 1: உட்பிரிவுக்கு முன் அறிக்கை</span>
+      <button class="btn-download-curr" onclick="saveAsPDFDirect('portrait1')">📥 PDF-ஆக சேமி (A4 Portrait)</button>
+    </div>
+
+    <div class="officer-center-title">
+      <span id="p1TalukTitle">திருவோணம்</span> வட்டாட்சியர் அவர்களுக்கு பணிந்தனுப்பப்படுகிறது
+    </div>
+
+    <div style="line-height:1.6; margin-bottom:10px;">
+      அய்யா,<br>
+      <div style="margin-left: 15px;">
+        பார்வை : (1) ப.மா 8 எண்: <span id="p1PamaNo" style="font-weight:bold;">2026/01/08</span> | மனுநாள்: <span id="p1ManuDate" style="font-weight:bold;">11/09/2026</span><br>
+        <span style="margin-left: 40px;">(2) மனுதாரர் : <span id="p1Applicant" style="font-weight:bold;">-</span></span>
+      </div>
+    </div>
+
+    <div style="text-indent: 25px; text-align: justify; margin-bottom: 12px;">
+      <span id="p1TalukBody">திருவோணம்</span> வட்டம், <span id="p1VillageBody" style="font-weight:bold;">நெய்வேலி வடபாதி</span> கிராமம் சென்று, புல எண் <span id="p1SurveyBody" style="font-weight:bold;">-</span> ல் பார்வை (1) ல் கண்டுள்ள உத்தரவுப்படி, ஸ்தல விசாரணை செய்தேன். பார்வை (2) ல் கண்டுள்ள மனுதாரர், தமது மனுவில் கீழ்கண்ட பட்டியலில் கண்டுள்ள விபரப்படி, தமது பாகத்தை உட்பிரிவு செய்து, பட்டா மாறுதல் உத்தரவு வழங்குமாறு கோரியுள்ளார்.
+    </div>
+
+    <div class="doc-title-top">உட்பிரிவுக்கு முன் விவரம்</div>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th style="width: 10%;">புல எண்</th>
+          <th style="width: 9%;">வகைபாடு</th>
+          <th style="width: 11%;">மொத்த பரப்பு</th>
+          <th style="width: 13%;">கிரையம் பெற்ற பரப்பு</th>
+          <th style="width: 22%;">பழைய பட்டா எண், மற்றும் பட்டாதாரர் பெயர்</th>
+          <th style="width: 21%;">கிரையம்-வாரிசுபாகம்-தானசெட்டில்மெண்ட்-உயில் மூலமாக பெற்று பட்டா மாறுதல் செய்யப்பட வேண்டிய நபர்</th>
+          <th style="width: 14%;">சார்பதிவாளர் அலுவலக பத்திர எண்/நாள்</th>
+        </tr>
+      </thead>
+      <tbody id="p1TableBody"></tbody>
+    </table>
+
+    <div style="text-indent: 25px; text-align: justify; margin-top: 15px; font-size: 11.5px; line-height: 1.6;">
+      மனுதாரர் கோரிக்கையை ஏற்று, கிராமக் கணக்குகளை சரிபார்த்து, மனுதாரரது புலத்தில் உள்ள புதிய அத்துக்களின்படியும், அனுபவப்படியும், அந்த ஸ்தலத்தின் மூலபத்திரங்களில் உள்ள அளவுகளையும் விபரங்களையும் அனுசரித்தும், மனுதாரரால் வழங்கப்பட்ட சம்பந்தப்பட்ட இதர ஆவணங்களின்படி மனுதாரரது பாகத்தை நில அளவை செய்து உட்பிரிவு ஆவணங்கள் தயார் செய்து இத்துடன் இணைத்து அனுப்பியுள்ளேன்.
+    </div>
+  </div>
+</div>
+
+<!-- 3. படிவம் 2: பின் பரிந்துரை -->
+<div style="overflow-x:auto;">
+  <div class="portrait-container" id="sheetContainerPortrait2" style="display:none;">
+    <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <span style="font-weight:bold; font-size:12px;">3. படிவம் 2: உட்பிரிவுக்கு பின் பரிந்துரை</span>
+      <button class="btn-download-curr" onclick="saveAsPDFDirect('portrait2')">📥 PDF-ஆக சேமி (A4 Portrait)</button>
+    </div>
+
+    <div style="text-indent: 25px; text-align: justify; margin-bottom: 12px; font-size: 12px; line-height: 1.6;">
+      மனுதாரரின் கோரிக்கையை ஏற்று, பின்வரும் பட்டியலில் கண்டுள்ளவாறு உட்பிரிவுகளை அங்கீகரித்து பட்டா மாறுதல் உத்தரவு வழங்கலாம் என்பதை பணிவுடன் தெரிவித்துக்கொள்கிறேன்.
+    </div>
+
+    <div class="doc-title-top">உட்பிரிவுக்கு பின் விவரம்</div>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th style="width: 15%;">புல எண் / புதிய உட்பிரிவு</th>
+          <th style="width: 15%;">வகைபாடு</th>
+          <th style="width: 18%;">பரப்பு</th>
+          <th style="width: 14%;">தீர்வை (₹)</th>
+          <th style="width: 38%;">பட்டா எண், மற்றும் புதிய பட்டாதாரர் பெயர்</th>
+        </tr>
+      </thead>
+      <tbody id="p2TableBody"></tbody>
+    </table>
+
+    <div style="border-top: 1.5px solid #000; margin-top: 20px; padding-top: 8px;">
+      <div style="text-align: center; font-weight: bold; font-size: 13px; margin-bottom: 6px;">
+        அலுவலகக் குறிப்பு
+      </div>
+      <div style="font-weight: bold; margin-bottom: 6px;">
+        பணிந்து வைக்கப்படுகிறது :
+      </div>
+      <div style="text-indent: 25px; text-align: justify; font-size: 11.5px; line-height: 1.6;">
+        உட்பிரிவு ஆவணங்கள் சரிபார்க்கப்பட்டு, முன்கூராய்வுப்பணி செய்யப்பட்டது. கிராம நிர்வாக அலுவலர், குறுவட்ட அளவர் பரிந்துரையை ஏற்று, மேற்கண்டுள்ள பட்டியலில் கண்டுள்ளவாறு புதிய உட்பிரிவுகளை அங்கீகாரம் செய்து பட்டா மாறுதல் உத்தரவு வழங்கலாம்.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentReportTab = 'landscape';
+let allSurveysData = [];
+
+const subdivColorThemes = [
+  { border: '#2563eb', bg: '#f0f7ff', badge: '#2563eb', text: '#1e40af' },
+  { border: '#059669', bg: '#f0fdf4', badge: '#059669', text: '#065f46' },
+  { border: '#d97706', bg: '#fffbeb', badge: '#d97706', text: '#92400e' },
+  { border: '#7c3aed', bg: '#faf5ff', badge: '#7c3aed', text: '#5b21b6' },
+  { border: '#db2777', bg: '#fdf2f8', badge: '#db2777', text: '#9d174d' },
+  { border: '#0891b2', bg: '#ecfeff', badge: '#0891b2', text: '#155e75' }
+];
+
+function executeClearAll() {
+  if (!confirm("அனைத்து விவரங்களையும் அழித்து புதிய படிவத்தைத் தொடங்கவா?")) return;
+  allSurveysData = [];
+  document.getElementById('district').value = '';
+  document.getElementById('taluk').value = '';
+  document.getElementById('villageNo').value = '';
+  document.getElementById('villageName').value = '';
+  document.getElementById('applicantNameInput').value = '';
+  renderSurveys();
+  updateLiveView();
+}
+
+function addNewSurveyCard() {
+  const newSurvey = {
+    id: Date.now() + Math.random(),
+    pattaNo: '1400',
+    holder: { pattaNo: '1400', relName: '', rel: 'மகன்', name: '', extraCount: 0 },
+    surveyNo: '100',
+    landType: 'ர.பு',
+    area: '1.00.00',
+    tax: '2.00',
+    subdivisions: []
+  };
+  allSurveysData.push(newSurvey);
+  const sIdx = allSurveysData.length - 1;
+  addSubdivisionToSurvey(sIdx, false);
+  addSubdivisionToSurvey(sIdx, false);
+
+  renderSurveys();
+  updateLiveView();
+}
+
+function handleSurveyNoInput(srvIdx, val) {
+  allSurveysData[srvIdx].surveyNo = val;
+  updateLiveView();
+}
+
+function handleSurveyNoBlur(srvIdx, val) {
+  allSurveysData[srvIdx].surveyNo = val;
+  const srv = allSurveysData[srvIdx];
+  srv.subdivisions.forEach((sub, sIdx) => {
+    const nextChar = String.fromCharCode(65 + sIdx);
+    sub.subDivNo = `${srv.surveyNo}${nextChar}`;
+    const subInput = document.querySelector(`input[data-srv-idx="${srvIdx}"][data-sub-idx="${sIdx}"][data-field="subDivNo"]`);
+    if (subInput) subInput.value = sub.subDivNo;
+  });
+  updateLiveView();
+}
+
+function parseToSqM(str) {
+  if (!str) return 0;
+  const p = str.toString().trim().split('.').map(x => parseInt(x, 10) || 0);
+  return ((p[0]||0) * 10000) + ((p[1]||0) * 100) + (p[2]||0);
+}
+
+function formatSqM(sqm) {
+  const hec = Math.floor(sqm / 10000);
+  const rem = sqm % 10000;
+  const ares = Math.floor(rem / 100);
+  const sq = rem % 100;
+  return `${hec}.${String(ares).padStart(2, '0')}.${String(sq).padStart(2, '0')}`;
+}
+
+function formatHolderDisplay(h) {
+  if (!h) return '';
+  let pNo = h.pattaNo ? h.pattaNo + ' ' : '';
+  let rName = h.relName ? h.relName + ' ' : '';
+  let rType = h.rel ? h.rel + ' ' : '';
+  let pName = h.name || '';
+  let str = `${pNo}${rName}${rType}${pName}`.trim();
+  let extra = parseInt(h.extraCount, 10) || 0;
+  if (extra > 0) str += ` மற்றும் ${extra} நபர்கள்`;
+  return str;
+}
+
+function renderSurveys() {
+  const container = document.getElementById('surveysContainer');
+  container.innerHTML = '';
+
+  if (allSurveysData.length === 0) {
+    container.innerHTML = `
+      <div style="background:#ffffff; border:1.5px dashed #94a3b8; padding:20px; text-align:center; border-radius:6px; color:#64748b;">
+        புல எண்கள் எதுவும் இல்லை. மேலே உள்ள <strong>"➕ புதிய புல எண் சேர்"</strong> பட்டனை அழுத்தித் தொடங்கவும்.
+      </div>
+    `;
+    return;
+  }
+
+  allSurveysData.forEach((srv, srvIdx) => {
+    container.innerHTML += `
+      <div class="survey-card" id="srvCard_${srvIdx}">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <strong style="font-size:13px; color:#1e3a8a;">புல எண்:</strong>
+            <input type="text" value="${srv.surveyNo}" style="width:110px; font-weight:bold; color:#dc2626;" 
+              oninput="handleSurveyNoInput(${srvIdx}, this.value)" 
+              onblur="handleSurveyNoBlur(${srvIdx}, this.value)">
+            <label style="margin:0; font-weight:bold;">வகை:</label>
+            <select style="width:80px;" onchange="allSurveysData[${srvIdx}].landType=this.value; syncSubtypes(${srvIdx}); updateLiveView();">
+              <option value="ர.பு" ${srv.landType==='ர.பு'?'selected':''}>ர.பு</option>
+              <option value="ர.மனை" ${srv.landType==='ர.மனை'?'selected':''}>ர.மனை</option>
+              <option value="ர.நன்" ${srv.landType==='ர.நன்'?'selected':''}>ர.நன்</option>
+            </select>
+            <label style="margin:0; font-weight:bold;">பரப்பு:</label>
+            <input type="text" value="${srv.area}" style="width:80px; font-weight:bold;" placeholder="0.00.00" oninput="allSurveysData[${srvIdx}].area=this.value; calculateSurveyTax(${srvIdx}); updateLiveView();">
+            <label style="margin:0; font-weight:bold;">தீர்வை (₹):</label>
+            <input type="text" value="${srv.tax}" style="width:65px;" oninput="allSurveysData[${srvIdx}].tax=this.value; calculateSurveyTax(${srvIdx}); updateLiveView();">
+          </div>
+          <button type="button" class="btn-red" style="font-size:11px; padding:4px 8px;" onclick="removeSurvey(${srvIdx})">நீக்கு</button>
+        </div>
+
+        <div style="background:#f8fafc; padding:10px; border-radius:4px; border:1px solid #cbd5e1; margin-bottom:10px;">
+          <div style="color:#1e3a8a; font-weight:bold; margin-bottom:6px;">இப்பொழுதுள்ள கையகத்துக்காரர் (தாய் பட்டாதாரர்):</div>
+          <div class="grid">
+            <div style="max-width:90px;"><label>பட்டா எண்</label><input type="text" value="${srv.holder.pattaNo||''}" oninput="allSurveysData[${srvIdx}].holder.pattaNo=this.value; updateLiveView();"></div>
+            <div><label>உறவினர் பெயர்</label><input type="text" value="${srv.holder.relName||''}" placeholder="தந்தை/கணவர் பெயர்" oninput="allSurveysData[${srvIdx}].holder.relName=this.value; updateLiveView();"></div>
+            <div style="max-width:100px;">
+              <label>உறவுமுறை</label>
+              <select onchange="allSurveysData[${srvIdx}].holder.rel=this.value; updateLiveView();">
+                ${['மகன்', 'மகள்', 'மனைவி', 'கணவன்', 'தந்தை', 'தாய்'].map(r => `<option value="${r}" ${srv.holder.rel===r?'selected':''}>${r}</option>`).join('')}
+              </select>
+            </div>
+            <div><label>பட்டாதாரர் பெயர்</label><input type="text" value="${srv.holder.name||''}" placeholder="பட்டாதாரர் பெயர்" oninput="allSurveysData[${srvIdx}].holder.name=this.value; updateLiveView();"></div>
+            <div style="max-width:100px;"><label>கூடுதல் நபர்கள்</label><input type="number" min="0" value="${srv.holder.extraCount||0}" oninput="allSurveysData[${srvIdx}].holder.extraCount=this.value; updateLiveView();"></div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#ecfdf5; padding:6px 10px; border-radius:4px; border:1px solid #a7f3d0;">
+          <span style="font-weight:bold; color:#065f46;">புதிய சப்டிவிஷன்கள் விவரம்:</span>
+          <button type="button" class="btn-green" onclick="addSubdivisionToSurvey(${srvIdx})">
+            ➕ புதிய சப்டிவிஷன் சேர் (Add New Sub Div)
+          </button>
+        </div>
+
+        <div id="subdivList_${srvIdx}">${renderSubdivisionInputs(srv, srvIdx)}</div>
+      </div>
+    `;
+  });
+}
+
+function syncSubtypes(srvIdx) {
+  const srv = allSurveysData[srvIdx];
+  srv.subdivisions.forEach((sub, subIdx) => {
+    sub.type = srv.landType;
+    const sel = document.querySelector(`select[data-srv-idx="${srvIdx}"][data-sub-idx="${subIdx}"][data-field="type"]`);
+    if (sel) sel.value = srv.landType;
+  });
+}
+
+function renderSubdivisionInputs(srv, srvIdx) {
+  let html = '';
+  srv.subdivisions.forEach((sub, subIdx) => {
+    const theme = subdivColorThemes[subIdx % subdivColorThemes.length];
+    const subNumber = subIdx + 1;
+
+    html += `
+      <div class="subdiv-item-box" style="border: 1.5px solid ${theme.border}; background-color: ${theme.bg};">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <div style="display:flex; align-items:center;">
+            <div class="subdiv-number-badge" style="background-color: ${theme.badge};">${subNumber}</div>
+            <span style="font-size:12px; font-weight:bold; color: ${theme.text};">புதிய உட்பிரிவு எண் (${subNumber})</span>
+          </div>
+          <button type="button" class="btn-red" style="font-size:10px; padding:2px 6px;" onclick="removeSubdivisionFromSurvey(${srvIdx}, ${subIdx})">நீக்கு</button>
+        </div>
+
+        <div class="grid">
+          <div style="max-width:90px;">
+            <label>வகுப்பு</label>
+            <select data-srv-idx="${srvIdx}" data-sub-idx="${subIdx}" data-field="type" onchange="allSurveysData[${srvIdx}].subdivisions[${subIdx}].type=this.value; updateLiveView();">
+              <option value="ர.பு" ${sub.type==='ர.பு'?'selected':''}>ர.பு</option>
+              <option value="ர.மனை" ${sub.type==='ர.மனை'?'selected':''}>ர.மனை</option>
+              <option value="ர.நன்" ${sub.type==='ர.நன்'?'selected':''}>ர.நன்</option>
+            </select>
+          </div>
+          <div>
+            <label style="color:${theme.badge};">புதிய உட்பிரிவு எண் *</label>
+            <input type="text" style="color:#dc2626; font-weight:bold;" value="${sub.subDivNo}" data-srv-idx="${srvIdx}" data-sub-idx="${subIdx}" data-field="subDivNo" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].subDivNo=this.value; updateLiveView();">
+          </div>
+          <div>
+            <label style="color:${theme.badge};">விஸ்தீரணம் *</label>
+            <input type="text" value="${sub.area1}" placeholder="0.00.00" data-srv-idx="${srvIdx}" data-sub-idx="${subIdx}" data-field="area1" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].area1=this.value; calculateSurveyTax(${srvIdx}); updateLiveView();">
+          </div>
+          <div style="max-width:90px;">
+            <label>தீர்வை (₹)</label>
+            <input type="text" readonly id="subTax_${srvIdx}_${subIdx}" value="${sub.tax}" style="background:#ffffff; font-weight:bold;">
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.9); padding:8px; border-radius:4px; margin-top:6px; border:1px solid #cbd5e1;">
+          <div style="margin-bottom:6px;">
+            <label style="display:inline; margin-right:15px; cursor:pointer; font-weight:bold;">
+              <input type="radio" name="pMode_${srvIdx}_${subIdx}" ${sub.isOldPatta?'checked':''} onchange="setPattaMode(${srvIdx}, ${subIdx}, true)"> பழைய பட்டாதாரர்
+            </label>
+            <label style="display:inline; cursor:pointer; font-weight:bold; color:#16a34a;">
+              <input type="radio" name="pMode_${srvIdx}_${subIdx}" ${!sub.isOldPatta?'checked':''} onchange="setPattaMode(${srvIdx}, ${subIdx}, false)"> புதிய பட்டாதாரர் (கிரையதாரர்)
+            </label>
+          </div>
+
+          <div id="holderContainer_${srvIdx}_${subIdx}">
+            ${renderHolderContent(srvIdx, subIdx)}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  return html;
+}
+
+function setPattaMode(srvIdx, subIdx, isOld) {
+  allSurveysData[srvIdx].subdivisions[subIdx].isOldPatta = isOld;
+  const container = document.getElementById(`holderContainer_${srvIdx}_${subIdx}`);
+  if (container) {
+    container.innerHTML = renderHolderContent(srvIdx, subIdx);
+  }
+  updateLiveView();
+}
+
+function renderHolderContent(srvIdx, subIdx) {
+  const srv = allSurveysData[srvIdx];
+  const sub = srv.subdivisions[subIdx];
+
+  if (sub.isOldPatta) {
+    return `<textarea rows="2" data-srv-idx="${srvIdx}" data-sub-idx="${subIdx}" data-field="manualText" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].manualText=this.value; updateLiveView();">${sub.manualText !== undefined && sub.manualText !== '' ? sub.manualText : formatHolderDisplay(srv.holder)}</textarea>`;
+  } else {
+    return `
+      <div>
+        <div id="chList_${srvIdx}_${subIdx}">
+          ${(sub.customHolders||[]).map((ch, cIdx) => renderSingleCH(srvIdx, subIdx, cIdx, ch)).join('')}
+        </div>
+        <button type="button" class="btn-blue" style="font-size:11px; padding:4px 8px;" onclick="addCH(${srvIdx}, ${subIdx})">+ கூடுதல் நபரைச் சேர்</button>
+      </div>
+    `;
+  }
+}
+
+function renderSingleCH(srvIdx, subIdx, cIdx, ch) {
+  const sub = allSurveysData[srvIdx].subdivisions[subIdx];
+  return `
+    <div class="ch-row-box" style="background:#f8fafc; border:1px solid #e2e8f0; padding:6px; border-radius:4px; margin-bottom:6px;">
+      <div class="grid" style="margin-bottom:4px;">
+        <div><label>உறவினர் பெயர்</label><input type="text" placeholder="உறவினர் பெயர்" value="${ch.relName||''}" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].customHolders[${cIdx}].relName=this.value; updateLiveView();"></div>
+        <div style="max-width:100px;">
+          <label>உறவுமுறை</label>
+          <select onchange="allSurveysData[${srvIdx}].subdivisions[${subIdx}].customHolders[${cIdx}].rel=this.value; updateLiveView();">
+            ${['மகன்', 'மகள்', 'மனைவி', 'கணவன்', 'தந்தை', 'தாய்'].map(r => `<option value="${r}" ${ch.rel===r?'selected':''}>${r}</option>`).join('')}
+          </select>
+        </div>
+        <div><label>பட்டாதாரர் பெயர்</label><input type="text" placeholder="பட்டாதாரர் பெயர்" value="${ch.name||''}" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].customHolders[${cIdx}].name=this.value; updateLiveView();"></div>
+        <div style="max-width:40px; display:flex; align-items:flex-end;"><button type="button" class="btn-red" style="padding:5px; height:32px; width:100%;" onclick="removeCH(${srvIdx}, ${subIdx}, ${cIdx})">X</button></div>
+      </div>
+      <div class="grid" style="grid-template-columns: 140px 1fr;">
+        <div>
+          <label style="color:#1e3a8a;">கிரயம் பெற்ற பரப்பு</label>
+          <input type="text" placeholder="${sub.area1 || '0.00.00'}" value="${ch.shareArea !== undefined ? ch.shareArea : sub.area1}" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].customHolders[${cIdx}].shareArea=this.value; updateLiveView();">
+        </div>
+        <div>
+          <label style="color:#1e3a8a;">சார்பதிவாளர் ஆவண எண் / நாள்</label>
+          <input type="text" placeholder="எ.கா: 1245/2026 நாள்: 05.08.2026" value="${ch.docInfo || ''}" oninput="allSurveysData[${srvIdx}].subdivisions[${subIdx}].customHolders[${cIdx}].docInfo=this.value; updateLiveView();">
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function addSubdivisionToSurvey(srvIdx, triggerRender = true) {
+  const srv = allSurveysData[srvIdx];
+  const nextChar = String.fromCharCode(65 + srv.subdivisions.length);
+  const isFirst = srv.subdivisions.length === 0;
+
+  const pSq = parseToSqM(srv.area);
+  const subArea1 = isFirst ? formatSqM(Math.round(pSq * 0.6)) : formatSqM(Math.round(pSq * 0.4));
+
+  srv.subdivisions.push({
+    type: srv.landType || 'ர.பு',
+    subDivNo: `${srv.surveyNo}${nextChar}`,
+    area1: subArea1,
+    tax: '0.00',
+    isOldPatta: isFirst,
+    manualText: '',
+    customHolders: isFirst ? [] : [{ relName: srv.holder.relName || '', rel: srv.holder.rel || 'மகன்', name: srv.holder.name || '', shareArea: subArea1, docInfo: '' }]
+  });
+  calculateSurveyTax(srvIdx);
+
+  if (triggerRender) {
+    const list = document.getElementById(`subdivList_${srvIdx}`);
+    if (list) list.innerHTML = renderSubdivisionInputs(srv, srvIdx);
+    updateLiveView();
+  }
+}
+
+function removeSubdivisionFromSurvey(srvIdx, subIdx) {
+  allSurveysData[srvIdx].subdivisions.splice(subIdx, 1);
+  calculateSurveyTax(srvIdx);
+  const list = document.getElementById(`subdivList_${srvIdx}`);
+  if (list) list.innerHTML = renderSubdivisionInputs(allSurveysData[srvIdx], srvIdx);
+  updateLiveView();
+}
+
+function removeSurvey(srvIdx) {
+  allSurveysData.splice(srvIdx, 1);
+  renderSurveys();
+  updateLiveView();
+}
+
+function addCH(srvIdx, subIdx) {
+  const sub = allSurveysData[srvIdx].subdivisions[subIdx];
+  if (!sub.customHolders) sub.customHolders = [];
+  sub.customHolders.push({
+    relName: '',
+    rel: 'மகன்',
+    name: '',
+    shareArea: sub.area1 || '0.00.00',
+    docInfo: ''
+  });
+  const container = document.getElementById(`holderContainer_${srvIdx}_${subIdx}`);
+  if (container) container.innerHTML = renderHolderContent(srvIdx, subIdx);
+  updateLiveView();
+}
+
+function removeCH(srvIdx, subIdx, cIdx) {
+  allSurveysData[srvIdx].subdivisions[subIdx].customHolders.splice(cIdx, 1);
+  const container = document.getElementById(`holderContainer_${srvIdx}_${subIdx}`);
+  if (container) container.innerHTML = renderHolderContent(srvIdx, subIdx);
+  updateLiveView();
+}
+
+function calculateSurveyTax(srvIdx) {
+  const srv = allSurveysData[srvIdx];
+  const pSqM = parseToSqM(srv.area);
+  const pTax = parseFloat(srv.tax) || 0;
+
+  srv.subdivisions.forEach((sub, sIdx) => {
+    const sSqM = parseToSqM(sub.area1);
+    sub.tax = pSqM > 0 ? ((sSqM / pSqM) * pTax).toFixed(2) : '0.00';
+    const taxInput = document.getElementById(`subTax_${srvIdx}_${sIdx}`);
+    if (taxInput) taxInput.value = sub.tax;
+  });
+}
+
+function syncSubdivisionInputsFromDOM() {
+  document.querySelectorAll('#surveysContainer [data-srv-idx][data-sub-idx][data-field]').forEach(el => {
+    const si = Number(el.dataset.srvIdx);
+    const subi = Number(el.dataset.subIdx);
+    const field = el.dataset.field;
+    if (!Number.isInteger(si) || !Number.isInteger(subi) || !field) return;
+    if (!allSurveysData[si] || !allSurveysData[si].subdivisions[subi]) return;
+    allSurveysData[si].subdivisions[subi][field] = el.value;
+  });
+}
+
+function updateLiveView() {
+  syncSubdivisionInputsFromDOM();
+  const dist = document.getElementById('district').value || '-';
+  const taluk = document.getElementById('taluk').value || '-';
+  const vilNo = document.getElementById('villageNo').value || '';
+  const vilName = document.getElementById('villageName').value || '-';
+  const pama = document.getElementById('pamaNo').value || '-';
+  const mDate = document.getElementById('manuDate').value || '-';
+
+  document.getElementById('lblDistrict').innerText = dist;
+  document.getElementById('lblTaluk').innerText = taluk;
+  document.getElementById('lblVillage').innerText = vilNo ? `${vilNo} - ${vilName}` : vilName;
+
+  const allSurveyNos = allSurveysData.map(s => s.surveyNo).join(', ');
+  document.getElementById('lblSurveyNoSummary').innerText = allSurveyNos || '-';
+
+  document.getElementById('p1TalukTitle').innerText = taluk;
+  document.getElementById('p1PamaNo').innerText = pama;
+  document.getElementById('p1ManuDate').innerText = mDate;
+  document.getElementById('p1TalukBody').innerText = taluk;
+  document.getElementById('p1VillageBody').innerText = vilName;
+  document.getElementById('p1SurveyBody').innerText = allSurveyNos || '-';
+
+  let applicantName = (document.getElementById('applicantNameInput')?.value || '').trim();
+  document.getElementById('p1Applicant').innerText = applicantName || '-';
+
+  // 1. Statement தாள் Rendering
+  const tbody = document.getElementById('statementBody');
+  tbody.innerHTML = '';
+  let totalSubAreaSqM = 0;
+  let totalParentAreaSqM = 0;
+
+  if (allSurveysData.length === 0) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td colspan="16" style="padding:15px; font-size:12px; color:#64748b;">புல எண் சேர்க்கப்பட்டதும் அட்டவணை இங்கே தோன்றும்...</td>`;
+    tbody.appendChild(tr);
+  } else {
+    allSurveysData.forEach((srv) => {
+      totalParentAreaSqM += parseToSqM(srv.area);
+
+      const pSurvey = srv.surveyNo;
+      const pType = srv.landType;
+      const pArea = srv.area;
+      const pTax = parseFloat(srv.tax || 0).toFixed(2);
+      const pHolder = formatHolderDisplay(srv.holder);
+      const subCount = Math.max(1, srv.subdivisions.length);
+      let surveySubSqM = 0;
+      let surveySubTax = 0;
+
+      srv.subdivisions.forEach((sub, subIdx) => {
+        const sAreaSqM = parseToSqM(sub.area1);
+        const st = parseFloat(sub.tax || 0);
+
+        surveySubSqM += sAreaSqM;
+        surveySubTax += st;
+        totalSubAreaSqM += sAreaSqM;
+
+        let holderDisplay = '';
+        if (sub.isOldPatta) {
+          holderDisplay = (sub.manualText !== undefined && sub.manualText !== '') ? sub.manualText : pHolder;
+        } else {
+          holderDisplay = (sub.customHolders || []).map(ch => {
+            let rName = ch.relName ? ch.relName + ' ' : '';
+            let rType = ch.rel ? ch.rel + ' ' : '';
+            let pName = ch.name || '';
+            return `${rName}${rType}${pName}`.trim();
+          }).filter(t => t.length > 0).join('<br>');
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          ${subIdx === 0 ? `
+            <td rowspan="${subCount}">${pSurvey}</td>
+            <td rowspan="${subCount}">${pType}</td>
+            <td rowspan="${subCount}">${pArea}</td>
+            <td rowspan="${subCount}">${pTax}</td>
+            <td rowspan="${subCount}" class="text-left">${pHolder}</td>
+          ` : ''}
+
+          <td class="col-new-subdiv">${sub.type}</td>
+          <td class="col-new-subdiv">${sub.subDivNo || ''}</td>
+          <td class="col-new-subdiv">${sub.area1 || ''}</td>
+          <td class="col-new-subdiv">${sub.area1 || ''}</td>
+          <td class="col-new-subdiv">${sub.tax}</td>
+          <td class="text-left col-new-subdiv">${holderDisplay}</td>
+
+          <td></td>
+          <td class="cell-nowrap">இருக்கிறது</td>
+          <td></td>
+          <td>கிரயப்படி</td>
+          <td></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const subTotalRow = document.createElement('tr');
+      subTotalRow.className = 'row-sub-total';
+      subTotalRow.innerHTML = `
+        <td colspan="5" style="border: 1px solid #000 !important; background:#ffffff;"></td>
+        <td colspan="2" style="text-align:right; font-weight:bold; border: 1px solid #000 !important;">மொத்தம் (${pSurvey}) :</td>
+        <td style="font-weight:bold; border: 1px solid #000 !important;">${formatSqM(surveySubSqM)}</td>
+        <td style="font-weight:bold; border: 1px solid #000 !important;">${formatSqM(surveySubSqM)}</td>
+        <td style="font-weight:bold; border: 1px solid #000 !important;">${surveySubTax.toFixed(2)}</td>
+        <td colspan="6" style="border: 1px solid #000 !important;"></td>
+      `;
+      tbody.appendChild(subTotalRow);
+    });
+  }
+
+  const blankRows = parseInt(document.getElementById('blankRowsCount').value, 10) || 0;
+  for (let r = 0; r < blankRows; r++) {
+    const blankTr = document.createElement('tr');
+    blankTr.className = 'empty-row';
+    blankTr.innerHTML = `<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+    tbody.appendChild(blankTr);
+  }
+
+  document.getElementById('overallAreaBadge').innerText = `கூட்டு பரப்பு: ${formatSqM(totalSubAreaSqM)} (தாய் பரப்பு: ${formatSqM(totalParentAreaSqM)})`;
+
+  // 2. படிவம் 1 Rendering
+  const p1Tbody = document.getElementById('p1TableBody');
+  p1Tbody.innerHTML = '';
+
+  allSurveysData.forEach(srv => {
+    const newSubs = srv.subdivisions.filter(s => !s.isOldPatta);
+
+    let buyerList = [];
+    newSubs.forEach(ns => {
+      (ns.customHolders || []).forEach(ch => {
+        let rName = ch.relName ? ch.relName + ' ' : '';
+        let rType = ch.rel ? ch.rel + ' ' : '';
+        let pName = ch.name || '';
+        let fullName = `${rName}${rType}${pName}`.trim();
+        if (!fullName) fullName = '-';
+
+        let personArea = (ch.shareArea && ch.shareArea.trim() !== '') ? ch.shareArea.trim() : (ns.area1 || '-');
+        let personDoc = (ch.docInfo && ch.docInfo.trim() !== '') ? ch.docInfo.trim() : '-';
+
+        buyerList.push({
+          name: fullName,
+          area: personArea,
+          doc: personDoc
+        });
+      });
+    });
+
+    const rowSpanCount = Math.max(1, buyerList.length);
+
+    if (buyerList.length === 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${srv.surveyNo}</strong></td>
+        <td>${srv.landType}</td>
+        <td>${srv.area}</td>
+        <td>-</td>
+        <td class="text-left">${formatHolderDisplay(srv.holder)}</td>
+        <td class="text-left">-</td>
+        <td>-</td>
+      `;
+      p1Tbody.appendChild(tr);
+    } else {
+      buyerList.forEach((b, bIdx) => {
+        const tr = document.createElement('tr');
+        if (bIdx === 0) {
+          tr.innerHTML = `
+            <td rowspan="${rowSpanCount}"><strong>${srv.surveyNo}</strong></td>
+            <td rowspan="${rowSpanCount}">${srv.landType}</td>
+            <td rowspan="${rowSpanCount}">${srv.area}</td>
+            <td><strong>${b.area}</strong></td>
+            <td rowspan="${rowSpanCount}" class="text-left">${formatHolderDisplay(srv.holder)}</td>
+            <td class="text-left">${b.name}</td>
+            <td>${b.doc}</td>
+          `;
+        } else {
+          tr.innerHTML = `
+            <td><strong>${b.area}</strong></td>
+            <td class="text-left">${b.name}</td>
+            <td>${b.doc}</td>
+          `;
+        }
+        p1Tbody.appendChild(tr);
+      });
+    }
+  });
+
+  const p1Blank = parseInt(document.getElementById('p1BlankRows')?.value, 10) || 0;
+  for (let r = 0; r < p1Blank; r++) {
+    const bTr = document.createElement('tr');
+    bTr.className = 'empty-row';
+    bTr.innerHTML = `<td></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+    p1Tbody.appendChild(bTr);
+  }
+
+  // 3. படிவம் 2 Rendering
+  const p2Tbody = document.getElementById('p2TableBody');
+  p2Tbody.innerHTML = '';
+  allSurveysData.forEach(srv => {
+    let srvSubAreaSqM = 0;
+    let srvSubTax = 0;
+
+    srv.subdivisions.forEach(sub => {
+      srvSubAreaSqM += parseToSqM(sub.area1);
+      srvSubTax += parseFloat(sub.tax || 0);
+
+      let pHolderDisplay = '';
+      if (sub.isOldPatta) {
+        pHolderDisplay = (sub.manualText !== undefined && sub.manualText !== '') ? sub.manualText : formatHolderDisplay(srv.holder);
+      } else {
+        pHolderDisplay = (sub.customHolders || []).map(ch => {
+          let rName = ch.relName ? ch.relName + ' ' : '';
+          let rType = ch.rel ? ch.rel + ' ' : '';
+          let pName = ch.name || '';
+          return `${rName}${rType}${pName}`.trim();
+        }).filter(t => t.length > 0).join(', ');
+      }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${sub.subDivNo || '-'}</strong></td>
+        <td>${sub.type}</td>
+        <td><strong>${sub.area1 || '-'}</strong></td>
+        <td>${sub.tax || '0.00'}</td>
+        <td class="text-left">${pHolderDisplay}</td>
+      `;
+      p2Tbody.appendChild(tr);
+    });
+
+    if (srv.subdivisions.length > 0) {
+      const subTotTr = document.createElement('tr');
+      subTotTr.className = 'row-sub-total-black';
+      subTotTr.innerHTML = `
+        <td colspan="2" style="text-align:right;">மொத்தம் (${srv.surveyNo}) :</td>
+        <td>${formatSqM(srvSubAreaSqM)}</td>
+        <td>${srvSubTax.toFixed(2)}</td>
+        <td></td>
+      `;
+      p2Tbody.appendChild(subTotTr);
+    }
+  });
+
+  const p2Blank = parseInt(document.getElementById('p2BlankRows')?.value, 10) || 0;
+  for (let r = 0; r < p2Blank; r++) {
+    const bTr = document.createElement('tr');
+    bTr.className = 'empty-row';
+    bTr.innerHTML = `<td></td><td></td><td></td><td></td><td></td>`;
+    p2Tbody.appendChild(bTr);
+  }
+}
+
+function switchReportTab(tabName) {
+  currentReportTab = tabName;
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+  const sLandscape = document.getElementById('sheetContainerLandscape').parentElement;
+  const sP1 = document.getElementById('sheetContainerPortrait1').parentElement;
+  const sP2 = document.getElementById('sheetContainerPortrait2').parentElement;
+  const dBtn = document.getElementById('dynamicDownloadBtn');
+
+  sLandscape.style.display = 'none';
+  sP1.style.display = 'none';
+  sP2.style.display = 'none';
+
+  if (tabName === 'landscape') {
+    document.querySelectorAll('.nav-tab-btn')[0].classList.add('active');
+    sLandscape.style.display = 'block';
+    dBtn.innerText = '📥 1. Statement PDF-ஆக சேமி (A4 Landscape)';
+  } else if (tabName === 'portrait1') {
+    document.querySelectorAll('.nav-tab-btn')[1].classList.add('active');
+    sP1.style.display = 'block';
+    document.getElementById('sheetContainerPortrait1').style.display = 'block';
+    dBtn.innerText = '📥 2. படிவம் 1 PDF-ஆக சேமி (A4 Portrait)';
+  } else if (tabName === 'portrait2') {
+    document.querySelectorAll('.nav-tab-btn')[2].classList.add('active');
+    sP2.style.display = 'block';
+    document.getElementById('sheetContainerPortrait2').style.display = 'block';
+    dBtn.innerText = '📥 3. படிவம் 2 PDF-ஆக சேமி (A4 Portrait)';
+  }
+}
+
+function saveAsPDFDirect(type) {
+  let htmlContent = '';
+  let orientation = 'landscape';
+  let title = 'Subdivision_Document';
+
+  if (type === 'landscape') {
+    orientation = 'landscape';
+    title = 'Subdivision_Statement_Landscape';
+    htmlContent = document.getElementById('sheetContainerLandscape').outerHTML;
+  } else if (type === 'portrait1') {
+    orientation = 'portrait';
+    title = 'Form1_Pre_Subdivision';
+    htmlContent = document.getElementById('sheetContainerPortrait1').outerHTML;
+  } else if (type === 'portrait2') {
+    orientation = 'portrait';
+    title = 'Form2_Post_Subdivision';
+    htmlContent = document.getElementById('sheetContainerPortrait2').outerHTML;
+  } else if (type === 'all') {
+    orientation = 'all';
+    title = 'All_Subdivision_Documents';
+    htmlContent = `
+      <div style="page-break-after: always; width: 1120px !important;">
+        ${document.getElementById('sheetContainerLandscape').outerHTML}
+      </div>
+      <div style="page-break-after: always; width: 794px !important; margin: 0 auto;">
+        ${document.getElementById('sheetContainerPortrait1').outerHTML}
+      </div>
+      <div style="width: 794px !important; margin: 0 auto;">
+        ${document.getElementById('sheetContainerPortrait2').outerHTML}
+      </div>
+    `;
+  }
+
+  const win = window.open('', '_blank');
+  if (!win) {
+    alert("பாப்-அப் பிளாக் செய்யப்பட்டுள்ளது. உங்கள் பிரவுசரின் அமைப்பில் Pop-ups அனுமதி வழங்கவும்.");
+    return;
+  }
+
+  win.document.write(`
+    <!DOCTYPE html>
+    <html lang="ta">
+    <head>
+      <meta charset="UTF-8">
+      <title>${title}</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+      <style>
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        @page {
+          size: ${orientation === 'landscape' ? 'A4 landscape' : (orientation === 'portrait' ? 'A4 portrait' : 'A4')};
+          margin: 6mm;
+        }
+        body {
+          font-family: 'Noto Sans Tamil', Arial, sans-serif;
+          margin: 0; padding: 0; background: #fff; color: #000;
+        }
+        .no-print { display: none !important; }
+        table { border-collapse: collapse !important; width: 100%; word-break: keep-all; }
+        th, td { border: 1px solid #000000 !important; }
+        .sheet-container { width: 100% !important; padding: 0 !important; margin: 0 !important; }
+        .statement-table { border: 1.5px solid #000000 !important; font-size: 9.5px; }
+        .statement-table th, .statement-table td { padding: 3px 2px; text-align: center; }
+        .rotate-up { height: 135px; vertical-align: bottom !important; border: 1px solid #000 !important; }
+        .rotate-up > div { writing-mode: vertical-rl; transform: rotate(180deg); white-space: normal; text-align: left; margin: 0 auto; padding: 4px 1px; font-size: 8.5px; height: 130px; font-weight: bold; }
+        .col-new-subdiv { color: #d32f2f !important; font-weight: bold; }
+        .row-sub-total { font-weight: bold; }
+        .cell-nowrap { white-space: nowrap !important; }
+        .text-left { text-align: left !important; padding-left: 5px !important; }
+        .portrait-container { width: 100% !important; border: none !important; padding: 10mm 15mm !important; margin: 0 auto !important; }
+        .doc-title-top { font-size: 13px; font-weight: bold; text-align: center; margin-bottom: 8px; text-decoration: underline; }
+        .officer-center-title { font-size: 16px; font-weight: bold; text-align: center; margin-bottom: 12px; }
+        .doc-table { width: 100%; border-collapse: collapse !important; border: 1.5px solid #000000 !important; font-size: 11px; margin: 12px 0; }
+        .doc-table th, .doc-table td { border: 1px solid #000 !important; padding: 5px 4px; text-align: center; }
+        #sheetContainerPortrait2 .doc-table tbody td { color: #d32f2f !important; font-weight: bold; }
+        #sheetContainerPortrait2 .doc-table tbody tr.row-sub-total-black td { color: #000000 !important; font-weight: bold; }
+        .empty-row td { height: 24px !important; }
+      </style>
+    </head>
+    <body>
+      ${htmlContent}
+      <script>
+        window.onload = function() {
+          setTimeout(function() {
+            window.print();
+          }, 300);
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+  win.document.close();
+}
+
+window.onload = function() {
+  allSurveysData = [
+    {
+      id: 1,
+      pattaNo: '1400',
+      holder: { pattaNo: '1400', relName: 'பெரியதம்பி செட்டியார்', rel: 'மகன்', name: 'உடையப்ப செட்டியார்', extraCount: 0 },
+      surveyNo: '202-1C1',
+      landType: 'ர.பு',
+      area: '0.93.70',
+      tax: '2.75',
+      subdivisions: [
+        { type: 'ர.பு', subDivNo: '202-1C1A', area1: '0.50.00', tax: '1.47', isOldPatta: true, manualText: '', customHolders: [] },
+        { type: 'ர.பு', subDivNo: '202-1C1B', area1: '0.43.70', tax: '1.28', isOldPatta: false, manualText: '', customHolders: [{ relName: 'பெரியதம்பி செட்டியார்', rel: 'மகன்', name: 'உடையப்ப செட்டியார்', shareArea: '0.43.70', docInfo: '1245/2026 நாள்: 05.08.2026' }] }
+      ]
+    }
+  ];
+  renderSurveys();
+  updateLiveView();
+};
+</script>
+</body>
+</html>
